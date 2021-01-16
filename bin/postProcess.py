@@ -97,7 +97,7 @@ def plotDensity(fileName):
     ax.set_ylabel('y')
     
     plt.tight_layout()
-    plt.savefig("./../data/img/testrun/%s.png" %time)
+    plt.savefig("./../data/img/CONFIG6REF400DT1e-05/%s.png" %time)
     #plt.show()
 
 

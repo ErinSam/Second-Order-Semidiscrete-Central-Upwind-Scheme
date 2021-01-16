@@ -33,26 +33,26 @@ def controlSequence():
     """
 
     # Control Properties
-    numIterations = 10
-    plotFreq = 1
+    numIterations = 300000
+    saveFreq = 100
 
     # Mesh properties
-    meshsize = 100
-    dx = 0.01
-    dt = 1e-08
+    meshsize = 400
+    dx = 0.0025
+    dt = 0.00001
 
     # Creating the mesh 
     mesh = meshClass.Mesh(meshsize, dx, dx)
     
     # Choosing an initial configurations (initial conditions)
-    mesh.initialise(1)
+    mesh.initialise(6)
     mesh.save()
 
     for i in range(1, numIterations+1):
         print(green("Simulation on iteration "+str(i), 2))
         mesh.update(dt)
         mesh.applyBC()
-        if ( i % plotFreq == 0 ):
+        if ( i % saveFreq == 0 ):
             print(green("Saving data for iteration "+str(i)))
             mesh.save()
 

@@ -405,29 +405,28 @@ void Mesh::_updateCells(double dt) {
     std::vector<double> fluxUp{0.0, 0.0, 0.0, 0.0};
     std::vector<double> fluxDown{0.0, 0.0, 0.0, 0.0};
 
-    for ( int i = 0; i<cellCount; i++ ) {
-        for ( int j = 0; j<cellCount; j++ ) {
-            if ( !cells[cellCount*i + j].boundaryTag && !cells[cellCount*i + j].innerBoundaryTag ) {
-                // Calculating the fluxes
-                numFlux_x(i-1, j, fluxLeft);
-                numFlux_x(i, j, fluxRight);
-                numFlux_y(i, j, fluxUp);
-                numFlux_y(i, j-1, fluxDown);
-            
-                // Saving temporary flow 
-                cells[cellCount*i + j].flowFieldTemp[0] = cells[cellCount*i + j].flowField[0]
-                                                          - dt*(fluxRight[0] - fluxLeft[0])/dx
-                                                          - dt*(fluxUp[0] - fluxDown[0])/dy;
-                cells[cellCount*i + j].flowFieldTemp[1] = cells[cellCount*i + j].flowField[1]
-                                                          - dt*(fluxRight[1] - fluxLeft[1])/dx
-                                                          - dt*(fluxUp[1] - fluxDown[1])/dy;
-                cells[cellCount*i + j].flowFieldTemp[2] = cells[cellCount*i + j].flowField[2]
-                                                          - dt*(fluxRight[2] - fluxLeft[2])/dx
-                                                          - dt*(fluxUp[2] - fluxDown[2])/dy;
-                cells[cellCount*i + j].flowFieldTemp[0] = cells[cellCount*i + j].flowField[3]
-                                                          - dt*(fluxRight[3] - fluxLeft[3])/dx
-                                                          - dt*(fluxUp[3] - fluxDown[3])/dy;
-            }
+  # pragma omp parallel for collapse(2)
+    for ( int i = 2; i<cellCount-2; i++ ) {
+        for ( int j = 2; j<cellCount-2; j++ ) {
+            // Calculating the fluxes
+            numFlux_x(i-1, j, fluxLeft);
+            numFlux_x(i, j, fluxRight);
+            numFlux_y(i, j, fluxUp);
+            numFlux_y(i, j-1, fluxDown);
+        
+            // Saving temporary flow 
+            cells[cellCount*i + j].flowFieldTemp[0] = cells[cellCount*i + j].flowField[0]
+                                                      - dt*(fluxRight[0] - fluxLeft[0])/dx
+                                                      - dt*(fluxUp[0] - fluxDown[0])/dy;
+            cells[cellCount*i + j].flowFieldTemp[1] = cells[cellCount*i + j].flowField[1]
+                                                      - dt*(fluxRight[1] - fluxLeft[1])/dx
+                                                      - dt*(fluxUp[1] - fluxDown[1])/dy;
+            cells[cellCount*i + j].flowFieldTemp[2] = cells[cellCount*i + j].flowField[2]
+                                                      - dt*(fluxRight[2] - fluxLeft[2])/dx
+                                                      - dt*(fluxUp[2] - fluxDown[2])/dy;
+            cells[cellCount*i + j].flowFieldTemp[3] = cells[cellCount*i + j].flowField[3]
+                                                      - dt*(fluxRight[3] - fluxLeft[3])/dx
+                                                      - dt*(fluxUp[3] - fluxDown[3])/dy;
         }
     }
 
