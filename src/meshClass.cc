@@ -405,7 +405,7 @@ void Mesh::_updateCells(double dt) {
     std::vector<double> fluxUp{0.0, 0.0, 0.0, 0.0};
     std::vector<double> fluxDown{0.0, 0.0, 0.0, 0.0};
 
-  # pragma omp parallel for collapse(2)
+  # pragma omp parallel for firstprivate(fluxLeft, fluxRight, fluxUp, fluxDown) collapse(2)
     for ( int i = 2; i<cellCount-2; i++ ) {
         for ( int j = 2; j<cellCount-2; j++ ) {
             // Calculating the fluxes
