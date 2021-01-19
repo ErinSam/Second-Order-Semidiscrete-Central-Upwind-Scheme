@@ -8,6 +8,7 @@
 import sys
 import glob
 from math import sqrt
+from scipy.ndimage import rotate
 import pandas as pd
 import numpy as np
 import seaborn as sns
@@ -16,20 +17,27 @@ import matplotlib.pyplot as plt
 from simple_colors import *
 
 
-def processData():
+def processData(arg):
     """
         Function that bdscdsncf
     """
 
-    files = glob.glob("../data/*.csv")
+    files = glob.glob("./data/*.csv")
 
     print(yellow("\n\tCreating Images", 5))
-    for i, fileName in enumerate(files):
-        print(blue("Reading in "), fileName)
-        plotDensity(fileName)
+    if ( arg == 0 ):
+        # Holding the image open to view the final contour plot much better
+        plotDensity(files[-1], True)
+
+    else:
+        # Saving all the files
+        for i, fileName in enumerate(files):
+            print(blue("Reading in "), fileName)
+            plotDensity(fileName)
 
 
-def plotDensity(fileName):
+
+def plotDensity(fileName, hold=False):
     """
         Function that plots the density
     """
@@ -48,16 +56,16 @@ def plotDensity(fileName):
     # Density 
     densityDist = np.array(df['rho'].tolist())
     densityDist = densityDist.reshape((int(sqrt(row_count)), -1))
-    #densityDist = rotate(densityDist, angle=90)
+    densityDist = rotate(densityDist, angle=90)
 
     # Locations
     x = np.array(df['x'].tolist())
     x = x.reshape((int(sqrt(row_count)), -1))
-    #x = rotate(x, angle=90)
+    x = rotate(x, angle=90)
 
     y = np.array(df['y'].tolist())
     y = y.reshape((int(sqrt(row_count)), -1))
-    #y = rotate(y, angle=90)
+    y = rotate(y, angle=90)
     
 
     # PLOTTING
@@ -97,9 +105,16 @@ def plotDensity(fileName):
     ax.set_ylabel('y')
     
     plt.tight_layout()
-    plt.savefig("./../data/img/CONFIG6REF400DT1e-05/%s.png" %time)
-    #plt.show()
+    plt.savefig("./data/img/CONFIG6REF200DT2.5e-05/%s.png" %time)
+    if ( hold ):
+        print(blue("Display the latest data... "))
+        plt.show()
 
 
 if __name__ == "__main__":
-    processData() 
+    if ( sys.argv[1] == "0" ):
+        # Display and hold the latest data 
+        processData(0)
+    else:
+        processData(-1)
+

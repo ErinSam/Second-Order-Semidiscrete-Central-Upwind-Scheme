@@ -32,3 +32,9 @@ obj/minmodForVLLim.o : src/minmodForVLLim.cc src/minmodForVLLim.h
 
 clean : 
 	rm obj/*.o lib/*.so
+
+plotLatest : 
+	python3 ./bin/postProcess.py 0
+
+saveAll : 
+	python3 ./bim/postProcess.py

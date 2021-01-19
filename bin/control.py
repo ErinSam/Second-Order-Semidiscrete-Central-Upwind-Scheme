@@ -33,13 +33,13 @@ def controlSequence():
     """
 
     # Control Properties
-    numIterations = 300000
-    saveFreq = 100
+    numIterations = 125000
+    saveFreq = 20
 
     # Mesh properties
-    meshsize = 400
-    dx = 0.0025
-    dt = 0.00001
+    meshsize = 200
+    dx = 0.005
+    dt = 0.000025
 
     # Creating the mesh 
     mesh = meshClass.Mesh(meshsize, dx, dx)
