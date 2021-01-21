@@ -76,7 +76,7 @@ def plotDensity(fileName, hold=False):
     # Density heatmap
     ax = fig.add_subplot(1,3, 1)
     ax = sns.heatmap(densityDist, xticklabels=False, yticklabels=False, 
-                     cmap='magma', vmin=0.0,
+                     cmap='viridis', vmin=0.0,
                      cbar_kws={"orientation": "horizontal", 
                                "label": "Density"})
     ax.set_title("Distribution")
@@ -85,7 +85,7 @@ def plotDensity(fileName, hold=False):
 
     # Density Surface
     ax = fig.add_subplot(1,3, 2, projection='3d')
-    ax.plot_surface(x, y, densityDist, cmap='magma')
+    ax.plot_surface(x, y, densityDist, cmap='viridis')
     ax.set_zlim(0.0,5.0)
     ax.set_xlim(0.0, 1.0)
     ax.set_ylim(0.0, 1.0)
@@ -96,10 +96,11 @@ def plotDensity(fileName, hold=False):
     ax.set_xlabel('x')
     ax.set_ylabel('y')
     ax.set_zlabel('Density')
+    ax.view_init(elev=5.0, azim=-151)
 
     # Contour Plots
     ax = fig.add_subplot(1,3, 3)
-    ax.contour(x, y, densityDist, 10, cmap='magma')
+    ax.contour(x, y, densityDist, 10, cmap='viridis')
     ax.set_title("Contour Plot")
     ax.set_xlabel('x')
     ax.set_ylabel('y')

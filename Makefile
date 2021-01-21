@@ -37,4 +37,4 @@ plotLatest :
 	python3 ./bin/postProcess.py 0
 
 saveAll : 
-	python3 ./bin/postProcess.py
+	python3 ./bin/postProcess.py x
