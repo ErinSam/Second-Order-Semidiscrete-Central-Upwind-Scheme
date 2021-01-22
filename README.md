@@ -52,6 +52,9 @@ change the location of the saved data, make appropriate changes to ./bin/postPro
 
 # <sub>Numerical Experiments</sub>
 
+# <sub><sub>Configuration 6</sub></sub>
+![](/data/img/CONFIG6REF200DT2.5e-05/gifs/Final.gif)
+
 
 # <sub><sub>References</sub></sub>
 [[1]] Alexander Kurganov; Eitan Tadmor (2002). _Solution of two-dimensional Riemann problems for gas dynamics 
